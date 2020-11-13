@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Install software from pamac
-pamac install lxappearance termite neovim nodejs atom
+pamac install lxappearance termite neovim nodejs atom nerd-fonts-source-code-pro nerd-fonts-fira-code feh polybar playerctl
 
 # Create .themes folder
 APPEARDIR=$HOME/.themes/
@@ -20,25 +20,25 @@ papirus-folders -C black --theme Papirus-Dark
 
 # Download and install latest version of Oh-my-bash
 #### TODO CHANGE THIS INSTALL LINK TO OH MY BASH
-sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
-sudo chmod u=rwx,g=rwx ~/.oh-my-zsh
-
-# Install powerline
-##### TODO GET POWERLINE THEME
-git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/powerlevel10k
+bash -c "$(curl -fsSL https://raw.githubusercontent.com/ohmybash/oh-my-bash/master/tools/install.sh)"
+sudo chmod u=rwx,g=rwx ~/.oh-my-bash
 
 # Remove obsolete config files
 mv -v ~/.vimrc ~/.vimrc.old
-mv -v ~/.zshrc ~/.zshrc.old
 mv -v ~/.bashrc ~/.bashrc/old
 
 # Create symlink for dotfiles
 # ln -s DOTFILE TARGET
 ln -s ${PWD}/.bashrc ${HOME}/.bashrc
-ln -s ${PWD}/.zshrc ${HOME}/.zshrc
+ln -s ${PWD}/.vimrc ${HOME}/.vimrc
+ln -s ${PWD}/.config/termite/config ${HOME}/.config/termite/config
+ln -s ${PWD}/.config/i3/config ${HOME}/.config/i3/config
+
+# Create symlink for wallpapers
+ln -s ${PWD}/Walls ${HOME}/Walls
+ln -s ${PWD}/Alerts ${HOME}/Alerts
 
 # Fix permissions
-sudo chmod u=rwx,g=rwx ~/.oh-my-zsh
 sudo chmod -R u=rwx,g=rwx ~/.icons
 
 echo Done!
