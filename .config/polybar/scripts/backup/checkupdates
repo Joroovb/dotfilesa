@@ -111,7 +111,7 @@ if ! fakeroot -- pacman -Sy --dbpath "$CHECKUPDATES_DB" --logfile /dev/null &> /
        exit 1
 fi
 pacman -Qu --dbpath "$CHECKUPDATES_DB" 2> /dev/null | grep -v '\[.*\]'
-
+echo "FUCK YOU I WORK"
 exit 0
 
 # vim: set noet:

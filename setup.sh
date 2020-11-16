@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Install software from pamac
-pamac install lxappearance termite neovim nodejs atom nerd-fonts-source-code-pro nerd-fonts-fira-code feh polybar playerctl
+pamac install lxappearance termite neovim nodejs atom nerd-fonts-complete feh polybar rofi playerctl
 
 # Create .themes folder
 APPEARDIR=$HOME/.themes/

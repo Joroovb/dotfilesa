@@ -1,17 +1,5 @@
 /*Dracula theme based on the Purple official rofi theme*/
 
-
-configuration {
-  show-icons: true;
-  icon-theme: "Papirus";
-  location: 0;
-  fake-transparency: false;
-  hide-scrollbar: true;
-  bw: 0;
-  terminal: "termite";
-  sidebar-mode: false;
-}
-
 * {
     font: "Source Code Pro 12";
     foreground: #f8f8f2;

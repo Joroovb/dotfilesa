@@ -48,7 +48,7 @@ bindsym $mod+Return exec termite
 bindsym $mod+Shift+q kill
 
 # Start Rofi
-bindsym $mod+d exec --no-startup-id i3-dmenu-desktop --dmenu='rofi -dmenu'
+bindsym $mod+d exec --no-startup-id rofi -show drun
 
 # change focus
 bindsym $mod+j focus left
@@ -137,15 +137,28 @@ bindsym $mod+Shift+8 move container to workspace number $ws8
 bindsym $mod+Shift+9 move container to workspace number $ws9
 bindsym $mod+Shift+0 move container to workspace number $ws10
 
+## Terminal
 assign [class="Termite"] $ws1
+
+## Browser
 assign [class="Google-chrome"] $ws2
-assign [class="discord"] $ws4
-assign [class="Steam"] $ws4
+
+
+## Editor
 assign [class="VSCodium"] $ws3
 assign [class="Atom"] $ws3
+assign [class="Subl"] $ws3
+
+## Games
+assign [class="discord"] $ws4
+assign [class="Steam"] $ws4
+
+## Spotify
 for_window [class="Spotify"] move to workspace $ws5
-# assign [class="Spotify"] $ws5
-# assign [class="Spotify Free"] $ws5
+
+## Chats
+assign [class="Whatsapp-for-linux"] $ws8
+
 
 # reload the configuration file
 bindsym $mod+Shift+c reload
