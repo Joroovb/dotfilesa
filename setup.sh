@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Install software from pamac
-pamac install lxappearance autotiling termite neovim nodejs sublime-text-3 nerd-fonts-complete feh polybar rofi playerctl gufw lightdm-gtk-greeter-settings
+pamac install lxappearance autotiling termite neovim nodejs sublime-text-3 nerd-fonts-complete feh polybar rofi playerctl gufw lightdm-gtk-greeter-settings fish lolcat figlet
 
 # Create .themes folder
 APPEARDIR=$HOME/.themes/
@@ -18,13 +18,14 @@ sudo chmod -R u=rwx,g=rwx ~/.icons
 wget -qO- https://git.io/papirus-folders-install | sh
 papirus-folders -C black --theme Papirus-Dark
 
-# Download and install latest version of Oh-my-bash
-bash -c "$(curl -fsSL https://raw.githubusercontent.com/ohmybash/oh-my-bash/master/tools/install.sh)"
-sudo chmod u=rwx,g=rwx ~/.oh-my-bash
-
 # Remove obsolete config files
 mv -v ~/.vimrc ~/.vimrc.old
 mv -v ~/.bashrc ~/.bashrc/old
+
+# Install the latest version  of Spaceship
+curl -fsSL https://starship.rs/install.sh | bash
+
+# TODO SETUP FISH FILES
 
 # Create symlink for dotfiles
 ln -s ${PWD}/.bashrc ${HOME}/.bashrc
@@ -44,5 +45,7 @@ ln -s ${PWD}/.config/rofi ${HOME}/.config/rofi
 # Create symlink for wallpapers
 ln -s ${PWD}/Walls ${HOME}/Walls
 ln -s ${PWD}/Alerts ${HOME}/Alerts
+
+# TODO COPY OVER FIGLET FONT
 
 echo Done!
