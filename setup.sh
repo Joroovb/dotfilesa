@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Install software from pamac
-pamac install lxappearance termite neovim nodejs atom nerd-fonts-complete feh polybar rofi playerctl
+pamac install lxappearance autotiling termite neovim nodejs sublime-text-3 nerd-fonts-complete feh polybar rofi playerctl gufw lightdm-gtk-greeter-settings
 
 # Create .themes folder
 APPEARDIR=$HOME/.themes/
@@ -19,7 +19,6 @@ wget -qO- https://git.io/papirus-folders-install | sh
 papirus-folders -C black --theme Papirus-Dark
 
 # Download and install latest version of Oh-my-bash
-#### TODO CHANGE THIS INSTALL LINK TO OH MY BASH
 bash -c "$(curl -fsSL https://raw.githubusercontent.com/ohmybash/oh-my-bash/master/tools/install.sh)"
 sudo chmod u=rwx,g=rwx ~/.oh-my-bash
 
@@ -28,17 +27,22 @@ mv -v ~/.vimrc ~/.vimrc.old
 mv -v ~/.bashrc ~/.bashrc/old
 
 # Create symlink for dotfiles
-# ln -s DOTFILE TARGET
 ln -s ${PWD}/.bashrc ${HOME}/.bashrc
 ln -s ${PWD}/.vimrc ${HOME}/.vimrc
+
+# Symlink termite config
+mkdir ~/.config/termite
 ln -s ${PWD}/.config/termite/config ${HOME}/.config/termite/config
+
+# Symlink i3 config
+mkdir ~/.config/i3
 ln -s ${PWD}/.config/i3/config ${HOME}/.config/i3/config
+ln -s ${PWD}/.config/dunst/ ${HOME}/.config/dunst
+ln -s ${PWD}/.config/polybar ${HOME}/.config/polybar
+ln -s ${PWD}/.config/rofi ${HOME}/.config/rofi
 
 # Create symlink for wallpapers
 ln -s ${PWD}/Walls ${HOME}/Walls
 ln -s ${PWD}/Alerts ${HOME}/Alerts
-
-# Fix permissions
-sudo chmod -R u=rwx,g=rwx ~/.icons
 
 echo Done!
