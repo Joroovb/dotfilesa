@@ -325,6 +325,8 @@
 
 [whatsapp-for-linux]
     appname = whatsapp-for-linux
-    new_icon = ~/.config/dunst/whatsapp.png
-    script = ~/.config/dunst/scripts/notification.sh
+    format = ""
+    script = ~/.config/dunst/scripts/whatsappnotif.sh
+    # new_icon = ~/.config/dunst/whatsapp.png
+    # script = ~/.config/dunst/scripts/notification.sh
     # i3-msg [class="Whatsapp-for-linux"] focus

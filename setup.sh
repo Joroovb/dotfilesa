@@ -1,4 +1,4 @@
-#!/bin/bash
+#! /bin/bash
 
 # Install software from pamac
 pamac install lxappearance autotiling termite neovim nodejs sublime-text-3 nerd-fonts-complete feh polybar rofi playerctl gufw lightdm-gtk-greeter-settings fish lolcat figlet
@@ -33,14 +33,27 @@ ln -s ${PWD}/.vimrc ${HOME}/.vimrc
 
 # Symlink termite config
 mkdir ~/.config/termite
-ln -s ${PWD}/.config/termite/config ${HOME}/.config/termite/config
+ln -s ${PWD}/.config/termite ${HOME}/.config/termite
 
 # Symlink i3 config
-mkdir ~/.config/i3
-ln -s ${PWD}/.config/i3/config ${HOME}/.config/i3/config
-ln -s ${PWD}/.config/dunst/ ${HOME}/.config/dunst
+rm -r ${HOME}/.config/i3
+ln -s ${PWD}/.config/i3 ${HOME}/.config/i3
+
+# Symlink dunst config
+rm -r ${HOME}/.config/dunst
+ln -s ${PWD}/.config/dunst ${HOME}/.config/dunst
+
+# Symlink polybar config
+rm -r ${HOME}/.config/polybar
 ln -s ${PWD}/.config/polybar ${HOME}/.config/polybar
+
+# Symlink rofi config
+rm -r ${HOME}/.config/rofi
 ln -s ${PWD}/.config/rofi ${HOME}/.config/rofi
+
+# Symlink fish config
+rm -r ${HOME}/.config/fish
+ln -s ${PWD}/.config/fish ${HOME}/.config/fish
 
 # Create symlink for wallpapers
 ln -s ${PWD}/Walls ${HOME}/Walls
