@@ -1,7 +1,7 @@
-#! /bin/bash
+#!/bin/bash
 
 # Install software from pamac
-pamac install lxappearance autotiling termite neovim nodejs sublime-text-3 nerd-fonts-complete feh polybar rofi playerctl gufw lightdm-gtk-greeter-settings fish lolcat figlet
+pamac install lxappearance autotiling termite neovim nodejs sublime-text-3 nerd-fonts-complete feh polybar rofi dunst yay playerctl gufw lightdm-gtk-greeter-settings fish lolcat figlet
 
 # Create .themes folder
 APPEARDIR=$HOME/.themes/
@@ -16,20 +16,17 @@ sudo cp -r "Dracula/" "${HOME}/.themes/"
 wget -qO- https://git.io/papirus-icon-theme-install | DESTDIR="$HOME/.icons" sh
 sudo chmod -R u=rwx,g=rwx ~/.icons
 wget -qO- https://git.io/papirus-folders-install | sh
-papirus-folders -C black --theme Papirus-Dark
-
-# Remove obsolete config files
-mv -v ~/.vimrc ~/.vimrc.old
-mv -v ~/.bashrc ~/.bashrc/old
+papirus-folders -C bluegrey --theme Papirus-Dark
 
 # Install the latest version  of Spaceship
 curl -fsSL https://starship.rs/install.sh | bash
 
-# Create symlink for dotfiles
+# Create symlink for vimrc
+mv -v ~/.vimrc ~/.vimrc.old
 ln -s ${PWD}/.vimrc ${HOME}/.vimrc
 
 # Symlink termite config
-mkdir ~/.config/termite
+rm -r ${HOME}/.config/termite
 ln -s ${PWD}/.config/termite ${HOME}/.config/termite
 
 # Symlink i3 config
