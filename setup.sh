@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Install software from pamac
-pamac install lxappearance autotiling termite neovim nodejs sublime-text-3 nerd-fonts-complete feh polybar rofi dunst yay playerctl gufw lightdm-gtk-greeter-settings fish lolcat figlet
+pamac install lxappearance autotiling termite neovim nodejs sublime-text-3 nerd-fonts-complete feh polybar rofi dunst yay playerctl gufw lightdm-gtk-greeter-settings fish lolcat figlet picom-ibhagwan-git
 
 # Create .themes folder
 APPEARDIR=$HOME/.themes/
@@ -44,6 +44,10 @@ ln -s ${PWD}/.config/polybar ${HOME}/.config/polybar
 # Symlink rofi config
 rm -r ${HOME}/.config/rofi
 ln -s ${PWD}/.config/rofi ${HOME}/.config/rofi
+
+# Symlink picom config
+rm -r ${HOME}/.config/picom
+ln -s ${PWD}/.config/picom ${HOME}/.config/picom
 
 # Symlink fish config
 rm -r ${HOME}/.config/fish

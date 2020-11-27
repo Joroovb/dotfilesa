@@ -42,6 +42,9 @@ exec_always --no-startup-id ~/.config/polybar/launch.sh
 # Dunst notification daemon
 exec_always --no-startup-id ~/.config/dunst/launch.sh
 
+# Start Picom compositor
+exec_always --no-startup-id pkill picom; picom --no-use-damage
+
 # Use Mouse+$mod to drag floating windows to their wanted position
 floating_modifier $mod
 
