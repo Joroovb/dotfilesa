@@ -25,10 +25,7 @@ mv -v ~/.bashrc ~/.bashrc/old
 # Install the latest version  of Spaceship
 curl -fsSL https://starship.rs/install.sh | bash
 
-# TODO SETUP FISH FILES
-
 # Create symlink for dotfiles
-ln -s ${PWD}/.bashrc ${HOME}/.bashrc
 ln -s ${PWD}/.vimrc ${HOME}/.vimrc
 
 # Symlink termite config
@@ -54,6 +51,10 @@ ln -s ${PWD}/.config/rofi ${HOME}/.config/rofi
 # Symlink fish config
 rm -r ${HOME}/.config/fish
 ln -s ${PWD}/.config/fish ${HOME}/.config/fish
+
+# Symlink nvim config
+rm -r ${HOME}/.config/nvim
+ln -s ${PWD}/.config/nvim ${HOME}/.config/nvim
 
 # Create symlink for wallpapers
 ln -s ${PWD}/Walls ${HOME}/Walls
