@@ -11,6 +11,7 @@ sudo mkdir -p $APPEARDIR
 git clone https://github.com/dracula/gtk.git
 sudo mv "gtk/" "Dracula/"
 sudo cp -r "Dracula/" "${HOME}/.themes/"
+rm -r "Dracula/" 
 
 # Install papirus icons & folders
 wget -qO- https://git.io/papirus-icon-theme-install | DESTDIR="$HOME/.icons" sh
