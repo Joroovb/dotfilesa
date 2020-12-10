@@ -58,7 +58,8 @@ ln -s ${PWD}/.config/fish ${HOME}/.config/fish
 rm -r ${HOME}/.config/nvim
 ln -s ${PWD}/.config/nvim ${HOME}/.config/nvim
 
-# Create symlink for wallpapers
+# Create symlink for wallpapers and alerts
+# Wallpapers from Wallhaven
 ln -s ${PWD}/Walls ${HOME}/Walls
 ln -s ${PWD}/Alerts ${HOME}/Alerts
 
