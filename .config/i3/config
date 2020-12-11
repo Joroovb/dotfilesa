@@ -43,7 +43,7 @@ exec_always --no-startup-id ~/.config/polybar/launch.sh
 exec_always --no-startup-id ~/.config/dunst/launch.sh
 
 # Start Picom compositor
-exec_always --no-startup-id pkill picom; picom --no-use-damage
+exec_always ~/.config/picom/launch.sh
 
 # Use Mouse+$mod to drag floating windows to their wanted position
 floating_modifier $mod
@@ -222,7 +222,10 @@ bindsym XF86AudioNext exec playerctl next
 bindsym XF86AudioPrev exec playerctl previous
 
 # Bind $mod+P to file manager
-bindsym $mod+P exec --no-startup-id nautilus
+#bindsym $mod+P exec --no-startup-id nautilus
+bindsym $mod+P exec termite -e "lf"
+
+bindsym $mod+b exec qutebrowser
 
 ### Startup Programs ###
 exec google-chrome

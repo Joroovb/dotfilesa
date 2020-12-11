@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Install software from pamac
-pamac install lxappearance autotiling termite neovim nodejs sublime-text-3 nerd-fonts-complete feh polybar rofi dunst yay playerctl gufw lightdm-gtk-greeter-settings fish lolcat figlet picom-ibhagwan-git networkmanager-dmenu
+pamac install lxappearance autotiling termite neovim nodejs sublime-text-3 nerd-fonts-complete feh polybar rofi dunst yay playerctl gufw lightdm-gtk-greeter-settings fish lolcat figlet picom-ibhagwan-git networkmanager-dmenu xcape pistol-git
 
 # Create .themes folder
 APPEARDIR=$HOME/.themes/
@@ -57,6 +57,10 @@ ln -s ${PWD}/.config/fish ${HOME}/.config/fish
 # Symlink nvim config
 rm -r ${HOME}/.config/nvim
 ln -s ${PWD}/.config/nvim ${HOME}/.config/nvim
+
+# Symlink lf config
+rm -r ${HOME}/.config/lf
+ln -s ${PWD}/.config/lf ${HOME}/.config/lf
 
 # Create symlink for wallpapers and alerts
 # Wallpapers from Wallhaven
