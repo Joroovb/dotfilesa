@@ -9,7 +9,9 @@ settings:
   bindings.commands:
     global:
       normal:
+        ',l': spawn streamlink --player=mpv {url} best
         ',m': spawn umpv {url}
+        q: null
   content.notifications:
     https://www.reddit.com: true
   content.register_protocol_handler:
