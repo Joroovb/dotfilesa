@@ -62,6 +62,10 @@ ln -s ${PWD}/.config/nvim ${HOME}/.config/nvim
 rm -r ${HOME}/.config/lf
 ln -s ${PWD}/.config/lf ${HOME}/.config/lf
 
+# Symlink qutebrowser config
+rm -r ${HOME}/.config/qutebrowser
+ln -s ${PWD}/.config/qutebrowser ${HOME}/.config/qutebrowser
+
 # Create symlink for wallpapers and alerts
 # Wallpapers from Wallhaven
 ln -s ${PWD}/Walls ${HOME}/Walls
