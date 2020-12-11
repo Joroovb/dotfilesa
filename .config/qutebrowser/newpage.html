@@ -67,7 +67,7 @@
 </head>
 	<body>
   		<nav>
-    	<h1>Good Stuff!</h1>
+	<h1 id="title"></h1>
 	    <ul>
 	     	<li>Server</li>
       		<li><a href="http://192.168.1.203:7878">radarr</a></li>
@@ -93,7 +93,39 @@
      	<li><a href="https://old.reddit.com/">reddit</a></li>
      </ul>
 
-  </nav>
-  <img src="https://media.giphy.com/media/KrRktL6SAUzE4/giphy.gif">
+  </nav> 
+  <img id="cat">
+ <h1 id="pic"></h1>
+ <script>
+	let element = document.getElementById("title");
+
+var d = new Date();
+var time = d.getHours();
+
+if (time < 12) {
+  element.innerHTML = "Good morning!";
+}
+if (time > 12 && time < 18) {
+  element.innerHTML = "Good afternoon!";
+}
+if (time == 12) {
+  element.innerHTML = "Go eat lunch!";
+}
+if (time > 18 && time < 5) {
+	element.innerHTML = "Good Night!";
+}
+
+let a = Math.floor(Math.random() * 2);
+switch (a){
+	case 0: 
+		console.log(a);
+		document.getElementById("cat").src = "https://media.giphy.com/media/YYwfMYBALrofC/giphy.gif";
+		break;
+	case 1:
+		console.log(a);
+		document.getElementById("cat").src = "https://media.giphy.com/media/KrRktL6SAUzE4/giphy.gif";
+		break;
+	}
+</script>
 </body>
 </html>
