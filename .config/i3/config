@@ -51,6 +51,12 @@ floating_modifier $mod
 # start a terminal
 bindsym $mod+Return exec termite
 
+# open spotify
+bindsym $mod+m exec termite --name spot -e ncspot
+assign [instance="spot"] $ws5
+for_window [instance="spot"] focus
+
+
 # kill focused window
 bindsym $mod+Shift+q kill
 
@@ -223,11 +229,10 @@ bindsym XF86AudioPrev exec playerctl previous
 
 # Bind $mod+P to file manager
 #bindsym $mod+P exec --no-startup-id nautilus
-bindsym $mod+P exec termite -e "lf"
+bindsym $mod+P exec termite --name files -e "lf"
+for_window [instance="files"] focus
 
 bindsym $mod+b exec qutebrowser
+assign [class="qutebrowser"] $ws2
 
 ### Startup Programs ###
-exec google-chrome
-exec spotify
-exec whatsapp-for-linux
