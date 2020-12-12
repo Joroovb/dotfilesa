@@ -1,131 +1,134 @@
 <!DOCTYPE html>
 <html>
-<head>
-  <title>New tab</title>
-  <style>
-    html {
-      align-items: center;
-      color: #C4C7C5;
-      display: flex;
-      font: 22px "Courier New", Courier, monospace;
-      height: 100%;
-      justify-content: center;
-      margin: 0;
-      background: #282A36;
-    }
-    
-    body {
-      display: flex;
-      margin: 1em;
-      padding: 1em;
-    }
+	<head>
+		<title>New tab</title>
+		<style>
+			html {
+				align-items: center;
+				color: #c4c7c5;
+				display: flex;
+				font: 22px 'Courier New', Courier, monospace;
+				height: 100%;
+				justify-content: center;
+				margin: 0;
+				background: #282a36;
+			}
 
-    h1 {
-      font-size: 2em;
-      grid-column: 1 / -1;
-      margin: 0;
-      text-align: center;
-    }
+			body {
+				display: flex;
+				margin: 1em;
+				padding: 1em;
+			}
 
-    a {
-      color: inherit;
-      text-decoration: none;
-    }
-    a:focus,
-    a:hover {
-      color: #1d81b2;
-    }
+			h1 {
+				font-size: 2em;
+				grid-column: 1 / -1;
+				margin: 0;
+				text-align: center;
+			}
 
-    nav {
-      display: grid;
-      grid-row-gap: 1em;
-      grid-template-columns: 1fr 1fr;
-      margin: 0 1em;
-      min-width: 24em;
-      padding: 1em 0;
-    }
+			a {
+				color: inherit;
+				text-decoration: none;
+			}
 
-    ul {
-      list-style-type: none;
-      margin: 0;
-      padding: 0;
-      white-space: nowrap;
-    }
+			a:focus,
+			a:hover {
+				color: #1d81b2;
+			}
 
-    li:first-child {
-      font-weight: bold;
-      line-height: 2em;
-    }
-    img {
-      border: 2px solid #313131;
-      height: auto;
-      object-fit: cover;
-      object-position: 50% 100%;
-      width: 8em;
-    }
-  </style>
-</head>
+			nav {
+				display: grid;
+				grid-row-gap: 1em;
+				grid-template-columns: 1fr 1fr;
+				margin: 0 1em;
+				min-width: 24em;
+				padding: 1em 0;
+			}
+
+			ul {
+				list-style-type: none;
+				margin: 0;
+				padding: 0;
+				white-space: nowrap;
+			}
+
+			li:first-child {
+				font-weight: bold;
+				line-height: 2em;
+			}
+
+			img {
+				border: 2px solid #313131;
+				height: auto;
+				object-fit: cover;
+				object-position: 50% 100%;
+				width: 8em;
+			}
+		</style>
+	</head>
 	<body>
-  		<nav>
-	<h1 id="title"></h1>
-	    <ul>
-	     	<li>Server</li>
-      		<li><a href="http://192.168.1.203:7878">radarr</a></li>
-    		<li><a href="https://192.168.1.203:8443">unifi</a></li>
-		<li><a href="http://192.168.1.203:1880">nodered</a><li>
-	    </ul>
-      	<ul>
-     	<li>News</li>
-     	<li><a href="https://www.nos.nl/">nos</a></li>
-     	<li><a href="https://www.nrc.nl/de">nrc</a></li>
-     	<li><a href="https://www.at5.nl/">at5</a></li>
-</ul>
-<ul>
-     	<li>Personal</li>
-     	<li><a href="https://mail.google.com/">gmail</a></li>
-      	<li><a href="https://www.github.com/joroovb">github</a></li>
-	<li><a href="https://drive.google.com">drive</a></li>
- 	</ul>
- 	<ul>
- 		<li>Entertainment</li>
-     	<li><a href="https://www.youtube.com/">youtube</a></li>
-     	<li><a href="https://www.twitch.com">twitch</a></li>
-     	<li><a href="https://old.reddit.com/">reddit</a></li>
-     </ul>
+		<nav>
+			<h1 id="title"></h1>
+			<ul>
+				<li>Server</li>
+				<li><a href="http://192.168.1.203:7878">radarr</a></li>
+				<li><a href="https://192.168.1.203:8443">unifi</a></li>
+				<li><a href="http://192.168.1.203:1880">nodered</a></li>
+				<li></li>
+			</ul>
 
-  </nav> 
-  <img id="cat">
- <h1 id="pic"></h1>
- <script>
-	let element = document.getElementById("title");
+			<ul>
+				<li>News</li>
+				<li><a href="https://www.nos.nl/">nos</a></li>
+				<li><a href="https://www.nrc.nl/de">nrc</a></li>
+				<li><a href="https://www.at5.nl/">at5</a></li>
+			</ul>
+			<ul>
+				<li>Personal</li>
+				<li><a href="https://mail.google.com/">gmail</a></li>
+				<li><a href="https://www.github.com/joroovb">github</a></li>
+				<li><a href="https://drive.google.com">drive</a></li>
+			</ul>
+			<ul>
+				<li>Entertainment</li>
+				<li><a href="https://www.youtube.com/">youtube</a></li>
+				<li><a href="https://www.twitch.com">twitch</a></li>
+				<li><a href="https://old.reddit.com/">reddit</a></li>
+			</ul>
+		</nav>
+		<img id="cat" />
+		<script>
+			let element = document.getElementById('title');
+			var d = new Date();
+			var time = d.getHours();
 
-var d = new Date();
-var time = d.getHours();
+			if (time > 5 && time < 12) {
+				element.innerHTML = 'Good morning!';
+			}
+			if (time > 12 && time < 18) {
+				element.innerHTML = 'Good afternoon!';
+			}
+			if (time == 12) {
+				element.innerHTML = 'Go eat lunch!';
+			}
+			if (time > 18 && time < 5) {
+				element.innerHTML = 'Good Night!';
+			}
 
-if (time < 12) {
-  element.innerHTML = "Good morning!";
-}
-if (time > 12 && time < 18) {
-  element.innerHTML = "Good afternoon!";
-}
-if (time == 12) {
-  element.innerHTML = "Go eat lunch!";
-}
-if (time > 18 && time < 5) {
-	element.innerHTML = "Good Night!";
-}
-
-let a = Math.floor(Math.random() * 2);
-switch (a){
-	case 0: 
-		console.log(a);
-		document.getElementById("cat").src = "https://media.giphy.com/media/YYwfMYBALrofC/giphy.gif";
-		break;
-	case 1:
-		console.log(a);
-		document.getElementById("cat").src = "https://media.giphy.com/media/KrRktL6SAUzE4/giphy.gif";
-		break;
-	}
-</script>
-</body>
+			let a = Math.floor(Math.random() * 2);
+			switch (a) {
+				case 0:
+					console.log(a);
+					document.getElementById('cat').src =
+						'https://media.giphy.com/media/YYwfMYBALrofC/giphy.gif';
+					break;
+				case 1:
+					console.log(a);
+					document.getElementById('cat').src =
+						'https://media.giphy.com/media/KrRktL6SAUzE4/giphy.gif';
+					break;
+			}
+		</script>
+	</body>
 </html>
