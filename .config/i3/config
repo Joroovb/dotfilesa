@@ -43,7 +43,7 @@ exec_always --no-startup-id ~/.config/polybar/launch.sh
 exec_always --no-startup-id ~/.config/dunst/launch.sh
 
 # Start Picom compositor
-exec_always ~/.config/picom/launch.sh
+exec_always --no-startup-id ~/.config/picom/launch.sh
 
 # Use Mouse+$mod to drag floating windows to their wanted position
 floating_modifier $mod
@@ -56,6 +56,7 @@ bindsym $mod+m exec termite --name spot -e ncspot
 assign [instance="spot"] $ws5
 for_window [instance="spot"] focus
 
+for_window [instance="cal"] focus
 
 # kill focused window
 bindsym $mod+Shift+q kill
@@ -211,7 +212,7 @@ bindsym $mod+g exec discord, exec steam
 for_window [class="^.*"] border pixel 0
 
 # Random Wallpapers
-exec_always feh --randomize --bg-fill ~/Walls/*
+exec_always --no-startup-id feh --randomize --bg-fill ~/Walls/*
 
 # Assing autofloat
 for_window [title=".*Emulator.*"] floating enable

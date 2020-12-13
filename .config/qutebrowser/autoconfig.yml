@@ -11,6 +11,7 @@ settings:
       normal:
         ',l': spawn streamlink --player=mpv {url} best
         ',m': spawn umpv {url}
+        b: spawn --userscript qute-bitwarden
         q: null
   content.notifications:
     https://www.reddit.com: true
