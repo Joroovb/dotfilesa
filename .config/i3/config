@@ -16,7 +16,6 @@ set $inner_gaps 10
 set $outer_gaps 0
 
 # #---Gaps---# #
-for_window [class="^.*"] border pixel 2
 gaps inner $inner_gaps
 gaps outer $outer_gaps
 
@@ -105,7 +104,6 @@ bindsym $mod+e layout toggle split
 # toggle tiling / floating
 bindsym $mod+Shift+space floating toggle
 
-# change focus between tiling / floating windows
 bindsym $mod+space focus mode_toggle
 
 # focus the parent container
@@ -156,6 +154,7 @@ assign [class="Termite"] $ws1
 
 ## Browser
 assign [class="Google-chrome"] $ws2
+assign [class="qutebrowser"] $ws2
 
 ## Editor
 assign [class="VSCodium"] $ws3
@@ -229,11 +228,11 @@ bindsym XF86AudioNext exec playerctl next
 bindsym XF86AudioPrev exec playerctl previous
 
 # Bind $mod+P to file manager
-#bindsym $mod+P exec --no-startup-id nautilus
 bindsym $mod+P exec termite --name files -e "lf"
-for_window [instance="files"] focus
+# for_window [instance="files"] focus
 
 bindsym $mod+b exec qutebrowser
-assign [class="qutebrowser"] $ws2
+
+focus_on_window_activation focus
 
 ### Startup Programs ###
