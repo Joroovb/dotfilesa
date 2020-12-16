@@ -3,6 +3,13 @@ starship init fish | source
 set -eg EDITOR 
 set -Ux EDITOR nvim
 
+# Start X at login
+if status is-login
+    if test -z "$DISPLAY" -a "$XDG_VTNR" = 1
+        exec startx -- -keeptty
+    end
+end
+
 export LF_ICONS="\
 tw=:\
 st=:\

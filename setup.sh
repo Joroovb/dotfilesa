@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Install software from pamac
-pamac install lxappearance autotiling termite neovim nodejs sublime-text-3 nerd-fonts-complete feh polybar rofi dunst playerctl gufw lightdm-gtk-greeter-settings fish lolcat figlet picom-ibhagwan-git networkmanager-dmenu xcape pistol-git ncspot bitwarden-cli fzf fd bat
+pamac install lxappearance wget calcurse autotiling termite neovim nodejs sublime-text-3 nerd-fonts-complete feh polybar rofi dunst playerctl ufw gufw lightdm-gtk-greeter-settings fish (lolcat figlet) picom-ibhagwan-git networkmanager-dmenu xcape pistol-git ncspot bitwarden-cli fzf fd bat i3-gaps
 
 # Create .themes folder
 APPEARDIR=$HOME/.themes/
@@ -70,6 +70,9 @@ ln -s ${PWD}/.config/qutebrowser ${HOME}/.config/qutebrowser
 # Wallpapers from Wallhaven
 ln -s ${PWD}/Walls ${HOME}/Walls
 ln -s ${PWD}/Alerts ${HOME}/Alerts
+
+# Symlink starship config
+ln -s ${PWD}/.config/starship.toml ${HOME}/.config/starship.toml
 
 # TODO COPY OVER FIGLET FONT
 
