@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Install software from pamac
-pamac install lxappearance wget calcurse autotiling termite neovim nodejs sublime-text-3 nerd-fonts-complete feh polybar rofi dunst playerctl ufw gufw lightdm-gtk-greeter-settings fish (lolcat figlet) picom-ibhagwan-git networkmanager-dmenu xcape pistol-git ncspot bitwarden-cli fzf fd bat i3-gaps
+pamac install lxappearance wget dmenu calcurse autotiling termite neovim nodejs sublime-text-3 nerd-fonts-complete feh polybar rofi dunst playerctl ufw gufw lightdm-gtk-greeter-settings fish (lolcat figlet) picom-ibhagwan-git networkmanager-dmenu xcape pistol-git ncspot bitwarden-cli fzf fd bat i3-gaps
 
 # Create .themes folder
 APPEARDIR=$HOME/.themes/
