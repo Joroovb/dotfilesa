@@ -23,8 +23,8 @@ run() {
 ### SETUP ###
 
 # Install Neovim
-sudo pacman -S \
-    git \
+sudo pacman -S /
+    fish /
     neovim 
 
 # Set Time Zone
@@ -73,11 +73,11 @@ sudo pacman -S \
     dosfstools \
     efibootmgr \
     grub \
-    m-tools \
+    mtools \
     os-prober
 
 comment "Making boot folder at /boot/EFI"
-mkdir /boot/efi
+mkdir /boot/EFI
 
 lsblk
 comment "What is your boot partition?"
@@ -97,7 +97,6 @@ sudo pacman -S \
     dunst \
     fd \
     feh \
-    fish \
     fzf \
     i3-gaps \
     lxappearance \
