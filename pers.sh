@@ -8,6 +8,34 @@ fail() {
     echo "$(tput bold; tput setaf 5)$@$(tput sgr0)" >&2
 }
 
+# Install Pacman Software
+sudo pacman -Syu
+sudo pacman -S \
+    bat \
+    calcurse \
+    dmenu \
+    dunst \
+    fd \
+    feh \
+    fzf \
+    i3-gaps \
+    lxappearance \
+    networkmanager \
+    openssh \
+    playerctl \
+    rofi \
+    termite \
+    ufw \
+    wget \
+    wireless_tools \
+    zathura 
+
+# Install yay
+comment "Installing Yay AUR Helper"
+git clone https://aur.archlinux.org/yay.git
+cd yay
+makepkg -si
+
 # Install AUR software
 yay -S \
     autotiling \
@@ -19,6 +47,13 @@ yay -S \
     #picom-ibhagwan-git \
     pistol-git \
     polybar
+    
+# Configure ufw.
+sudo ufw default deny incoming
+sudo ufw default allow outgoing
+
+### Enable Services ###
+run systemctl enable networkmanager
 
 ### THEMING ###
 
@@ -97,3 +132,4 @@ ln -s ${PWD}/.config/zathura ${HOME}/.config/zathura
 # Symlink starship config
 ln -s ${PWD}/.config/starship.toml ${HOME}/.config/starship.toml
 
+echo "Done!"

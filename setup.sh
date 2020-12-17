@@ -76,43 +76,7 @@ comment "Installing Grub"
 grub-install --target=x86_64-efi  --bootloader-id=grub_uefi --recheck
 grub-mkconfig -o /boot/grub/grub.cfg
 
-# Install Pacman Software
-sudo pacman -Syu
-sudo pacman -S \
-    bat \
-    calcurse \
-    curl \
-    dmenu \
-    dunst \
-    fd \
-    feh \
-    fzf \
-    i3-gaps \
-    lxappearance \
-    networkmanager \
-    networkmanager-dmenu-git \
-    openssh \
-    playerctl \
-    rofi \
-    termite \
-    ufw \
-    wget \
-    wireless_tools \
-    zathura 
-
-# Install yay.
-git clone https://aur.archlinux.org/yay.git
-cd yay
-makepkg -si
-
 ### maybe pile ###
 # xcape
-
-# Configure ufw.
-sudo ufw default deny incoming
-sudo ufw default allow outgoing
-
-### Enable Services ###
-run systemctl enable networkmanager
 
 echo Done!
