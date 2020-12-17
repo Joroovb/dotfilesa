@@ -4,10 +4,6 @@ comment() {
     echo ">> $(tput setaf 2) $@$(tput sgr0)" >&2
 }
 
-fail() {
-    echo "$(tput bold; tput setaf 5)$@$(tput sgr0)" >&2
-}
-
 ### SETUP ###
 
 # Install Neovim
@@ -86,6 +82,7 @@ sudo pacman -S \
     dhcpcd \
     netctl
 
+# Enable services
 systemctl enable systemd-resolved.service
 
 ### maybe pile ###

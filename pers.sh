@@ -4,19 +4,17 @@ comment() {
     echo ">> $(tput setaf 2) $@$(tput sgr0)" >&2
 }
 
-fail() {
-    echo "$(tput bold; tput setaf 5)$@$(tput sgr0)" >&2
-}
-
 # Install Pacman Software
 sudo pacman -Syu
 sudo pacman -S \
     bat \
     calcurse \
+    cowsay \
     dmenu \
     dunst \
     fd \
     feh \
+    fortune-mod \
     fzf \
     i3-gaps \
     lxappearance \
@@ -28,32 +26,27 @@ sudo pacman -S \
     ufw \
     wget \
     wireless_tools \
+    qutebrowser \
     zathura 
 
 # Install yay
 comment "Installing Yay AUR Helper"
-git clone https://aur.archlinux.org/yay.git ~/
+git clone https://aur.archlinux.org/yay.git ~/yay
 cd ~/yay
 makepkg -si
 
 # Install AUR software
-yay -S \
-    autotiling \
-    #bitwarden-cli\
-    lf \
-    #ncspot \
-    networkmanager-dmenu \
-    nerd-fonts-fira-code \
-    #picom-ibhagwan-git \
-    pistol-git \
-    polybar
+yay -Syu autotiling bitwarden-cli lf ncspot networkmanager-dmenu nerd-fonts-fira-code picom-ibhagwan-git pistol-git polybar fortune-mod-calvin
+
+# Create environment file for ssh
+touch ~/.ssh/environment
     
 # Configure ufw.
 sudo ufw default deny incoming
 sudo ufw default allow outgoing
 
 ### Enable Services ###
-run systemctl enable networkmanager
+sudo systemctl enable NetworkManager
 
 ### THEMING ###
 
@@ -133,5 +126,8 @@ ln -s ${PWD}/.config/zathura ${HOME}/.config/zathura
 
 # Symlink starship config
 ln -s ${PWD}/.config/starship.toml ${HOME}/.config/starship.toml
+
+### GUI ###
+sudo pacman -S xorg xorg-xinit
 
 echo "Done!"
