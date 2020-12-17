@@ -32,8 +32,8 @@ sudo pacman -S \
 
 # Install yay
 comment "Installing Yay AUR Helper"
-git clone https://aur.archlinux.org/yay.git
-cd yay
+git clone https://aur.archlinux.org/yay.git ~/
+cd ~/yay
 makepkg -si
 
 # Install AUR software
@@ -56,6 +56,8 @@ sudo ufw default allow outgoing
 run systemctl enable networkmanager
 
 ### THEMING ###
+
+cd ~/dotfiles
 
 # Create .themes folder
 APPEARDIR=$HOME/.themes/

@@ -76,6 +76,18 @@ comment "Installing Grub"
 grub-install --target=x86_64-efi  --bootloader-id=grub_uefi --recheck
 grub-mkconfig -o /boot/grub/grub.cfg
 
+comment "Copy dotfiles to new user"
+cp -r ${PWD} /home/$USERNAME
+
+comment "Install networking"
+sudo pacman -S \
+    dialog \
+    wpa_supplicant \
+    dhcpcd \
+    netctl
+
+systemctl enable systemd-resolved.service
+
 ### maybe pile ###
 # xcape
 
