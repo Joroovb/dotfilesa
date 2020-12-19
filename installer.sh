@@ -54,9 +54,9 @@ DEVICE_SATA="false"
 DEVICE_NVME="false"
 DEVICE_MMC="false"
 
-PS3="What kind of drive is your install target?"$'\n'$'\n'
+PS3=$'\n'"What kind of drive is your install target?"$'\n'$'\n'
 
-echo -e "\n"
+# echo -e "\n"
 
 drives=("HHD" "NVME" "MMC")
 select driveOpt in "${drives[@]}"
@@ -105,7 +105,7 @@ mkfs.ext4 $PARTITION_ROOT
 
 # Mount the root partition
 comment "Mounting root partitions"
-mount /dev/$DEVICE_ROOT /mnt
+mount $DEVICE_ROOT /mnt
 
 # Select mirrors
 comment "Install reflector tool and rate best download mirrors"
