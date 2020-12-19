@@ -157,13 +157,13 @@ https://raw.githubusercontent.com/Joroovb/dotfiles/master/installer.sh
 #    mtools \
 #    os-prober
 
-comment "Making boot folder at /boot/EFI"
-mkdir /boot/EFI
+#comment "Making boot folder at /boot/EFI"
+#mkdir /boot/EFI
 
-lsblk
-comment "What is your boot partition?"
-read BOOTPART
-mount $PARTITION_BOOT /boot/EFI
+#lsblk
+#comment "What is your boot partition?"
+#read BOOTPART
+#mount $PARTITION_BOOT /boot/EFI
 
 comment "Installing Grub"
 grub-install --target=x86_64-efi  --bootloader-id=grub_uefi --recheck

@@ -251,4 +251,14 @@ echo "%wheel ALL=(ALL) ALL" > /mnt/etc/sudoers.d/sudo-for-wheel-group
 comment "Installing packages"
 arch-chroot /mnt pacman -Syu --noconfirm --needed $PACKAGES_PACMAN
 
+comment "Making boot folder at /boot/EFI"
+mkdir /mnt/boot/EFI
+
+comment "Mounting boot partition"
+mount $PARTITION_BOOT /mnt/boot/EFI
+
+comment "Installing Grub"
+arch-chroot /mnt grub-install --target=x86_64-efi  --bootloader-id=grub_uefi --recheck
+grub-mkconfig -o /mnt/boot/grub/grub.cfg
+
 echo "First Test Done" 
