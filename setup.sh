@@ -14,11 +14,11 @@ microCode() {
      do
         case $opt in
             "Intel")
-                sudo pacman -S intel-ucode
+                CPUPACK="intel-ucode"
                 break
                 ;;
             "AMD")
-                sudo pacman -S amd-ucode
+                CPUPACK="amd-ucode"
                 break
                 ;;
             "None")
@@ -40,19 +40,20 @@ graphics() {
      do
         case $opt in
             "Intel")
-                sudo pacman -S mesa mesa-vdpau lib32-mesa lib32-mesa-vdpau libva-mesa-driver lib32-vulkan-intel vulkan-intel vulkan-icd-loader lib32-vulkan-icd-loader
+                GRAPHICSPACKS="mesa mesa-vdpau lib32-mesa lib32-mesa-vdpau libva-mesa-driver lib32-vulkan-intel vulkan-intel vulkan-icd-loader lib32-vulkan-icd-loader"
                 break
                 ;;
             "AMD")
-                sudo pacman -S mesa mesa-vdpau lib32-mesa lib32-mesa-vdpau libva-mesa-driver lib32-vulkan-radeon vulkan-radeon
+                GRAPHICSPACKS="mesa mesa-vdpau lib32-mesa lib32-mesa-vdpau libva-mesa-driver lib32-vulkan-radeon vulkan-radeon"
                 break
                 ;;
             "Nvidia")
-                sudo pacman -S nvidia lib32-nvidia-utils
+                GRAPHICSPACKS="nvidia lib32-nvidia-utils"
                 break
                 ;;
             "None")
                 echo "Skipping graphics drivers installation"
+                GRAPHICSPACKS=""
                 break
                 ;;
             *) echo "Invalid input";;
@@ -140,12 +141,12 @@ https://raw.githubusercontent.com/Joroovb/dotfiles/master/installer.sh
 #echo "%wheel ALL=(ALL) ALL" > /etc/sudoers.d/sudo-for-wheel-group
 
 # Install micro code
-comment "Install micro code"
-microCode
+# comment "Install micro code"
+# microCode
 
 # Install graphics drivers
-comment "Install graphics drivers"
-graphics
+#comment "Install graphics drivers"
+#graphics
 
 ### INSTALL GRUB ###
 comment "Install bootloader"

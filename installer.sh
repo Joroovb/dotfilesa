@@ -8,18 +8,79 @@ fail() {
     echo "$(tput bold; tput setaf 5)$@$(tput sgr0)" >&2
 }
 
+microCode() {
+     PS3=$'\n'"Do you have a Intel or AMD processor?"$'\n'
+
+     echo -e "\n"
+
+     options=("Intel" "AMD" "None")
+     select opt in "${options[@]}"
+     do
+        case $opt in
+            "Intel")
+                CPUPACK="intel-ucode"
+                break
+                ;;
+            "AMD")
+                CPUPACK="amd-ucode"
+                break
+                ;;
+            "None")
+                echo "Skipping micro code installation"
+                break
+                ;;
+            *) echo "Invalid input";;
+        esac
+    done
+}
+
+graphics() {
+     PS3=$'\n'"Do you have Intel Integrated graphics, a AMD GPU or a Nvidia GPU?"$'\n'
+
+     echo -e "\n"
+
+     options=("Intel" "AMD" "Nvidia" "None")
+     select opt in "${options[@]}"
+     do
+        case $opt in
+            "Intel")
+                GRAPHICSPACKS="mesa mesa-vdpau lib32-mesa lib32-mesa-vdpau libva-mesa-driver lib32-vulkan-intel vulkan-intel vulkan-icd-loader lib32-vulkan-icd-loader"
+                break
+                ;;
+            "AMD")
+                GRAPHICSPACKS="mesa mesa-vdpau lib32-mesa lib32-mesa-vdpau libva-mesa-driver lib32-vulkan-radeon vulkan-radeon"
+                break
+                ;;
+            "Nvidia")
+                GRAPHICSPACKS="nvidia lib32-nvidia-utils"
+                break
+                ;;
+            "None")
+                echo "Skipping graphics drivers installation"
+                GRAPHICSPACKS=""
+                break
+                ;;
+            *) echo "Invalid input";;
+        esac
+    done
+}
+
 # CONFIG
-echo -n "What is your username? "
+comment "What is your username? "
 read USERNAME
 
 comment "Set password of new user"
-read PASSWORD
+read -s PASSWORD
 
 comment "Set root password"
-read ROOT_PASSWORD
+read -s ROOT_PASSWORD
 
-echo -n "What should this computer be called?"
+comment "What should this computer be called?"
 read HOSTNAME
+
+microCode
+
+graphics
 
 # Set clock
 timedatectl set-ntp true
@@ -182,8 +243,9 @@ comment "Enable sudo access for group wheel"
 echo "%wheel ALL=(ALL) ALL" > /mnt/etc/sudoers.d/sudo-for-wheel-group
 
 # Install packages
+# MAKE PACKS LIST AND FEED INTO PACMAN
 comment "Installing packages"
-arch-chroot /mnt pacman -Syu --noconfirm --needed \
+arch-chroot /mnt pacman -Syu --noconfirm --needed \ # NEEDS TO BE ONE LINE
         # Utility
         fish \
         nano \
