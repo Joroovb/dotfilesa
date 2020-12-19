@@ -65,7 +65,7 @@ graphics() {
     done
 }
 
-PACKS="fish nano git dosfstools efibootmgr grub mtools os-prober dialog wpa_supplicant dhcpcd netctl"
+PACKS="fish nano git dosfstools efibootmgr grub mtools os-prober dialog wpa_supplicant dhcpcd netctl dialog wpa_supplicant dhcpcd netctl"
 
 # CONFIG
 comment "What is your username? "
