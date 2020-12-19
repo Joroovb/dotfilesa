@@ -11,11 +11,6 @@ fail() {
 # Set clock
 timedatectl set-ntp true
 
-# Select mirrors
-comment "Install reflector tool and rate best download mirrors"
-pacman -Sy --noconfirm reflector
-reflector --country Netherlands --age 12 --protocol https --sort rate --save /etc/pacman.d/mirrorlist
-
 # Prepare disk for Installation
 lsblk
 comment "Where do you want to install Arch?"
@@ -104,6 +99,15 @@ fi
 # Mount the root partition
 mount /dev/$DEVICE_ROOT /mnt
 
+# Select mirrors
+comment "Install reflector tool and rate best download mirrors"
+pacman -Sy --noconfirm reflector
+reflector --country Netherlands --age 12 --protocol https --sort rate --save /etc/pacman.d/mirrorlist
+
+# Enable Pacman features
+sed -i 's/#Color/Color/' /etc/pacman.conf
+sed -i 's/#TotalDownload/TotalDownload/' /etc/pacman.conf
+
 # Install base system
 pacstrap /mnt base base-devel linux linux-headers linux-firmware
 
@@ -116,9 +120,5 @@ echo "" >> /mnt/etc/pacman.conf
 echo "[multilib]" >> /mnt/etc/pacman.conf
 echo "Include = /etc/pacman.d/mirrorlist" >> /mnt/etc/pacman.conf
 echo "" >> /mnt/etc/pacman.conf
-
-# Enable Pacman features
-sed -i 's/#Color/Color/' /mnt/etc/pacman.conf
-sed -i 's/#TotalDownload/TotalDownload/' /mnt/etc/pacman.conf
 
 echo "First Test Done"
