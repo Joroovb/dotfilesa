@@ -4,12 +4,81 @@ comment() {
     echo ">> $(tput setaf 2) $@$(tput sgr0)" >&2
 }
 
+microCode() {
+     PS3=$'\n'"Do you have a Intel or AMD processor?"$'\n'
+
+     echo -e "\n"
+
+     options=("Intel" "AMD" "None")
+     select opt in "${options[@]}"
+     do
+        case $opt in
+            "Intel")
+                sudo pacman -S intel-ucode
+                break
+                ;;
+            "AMD")
+                sudo pacman -S amd-ucode
+                break
+                ;;
+            "None")
+                echo "Skipping micro code installation"
+                break
+                ;;
+            *) echo "Invalid input";;
+        esac
+    done
+}
+
+graphics() {
+     PS3=$'\n'"Do you have Intel Integrated graphics, a AMD GPU or a Nvidia GPU?"$'\n'
+
+     echo -e "\n"
+
+     options=("Intel" "AMD" "Nvidia" "None")
+     select opt in "${options[@]}"
+     do
+        case $opt in
+            "Intel")
+                sudo pacman -S mesa mesa-vdpau lib32-mesa lib32-mesa-vdpau libva-mesa-driver lib32-vulkan-intel vulkan-intel vulkan-icd-loader lib32-vulkan-icd-loader
+                break
+                ;;
+            "AMD")
+                sudo pacman -S mesa mesa-vdpau lib32-mesa lib32-mesa-vdpau libva-mesa-driver lib32-vulkan-radeon vulkan-radeon
+                break
+                ;;
+            "Nvidia")
+                sudo pacman -S nvidia lib32-nvidia-utils
+                break
+                ;;
+            "None")
+                echo "Skipping graphics drivers installation"
+                break
+                ;;
+            *) echo "Invalid input";;
+        esac
+    done
+}
+
+packages_aur() {
+    arch-chroot /mnt sed -i 's/%wheel ALL=(ALL) ALL/%wheel ALL=(ALL) NOPASSWD: ALL/' /etc/sudoers
+    pacman_install "git"
+    arch-chroot /mnt bash -c "echo -e \"$USER_PASSWORD\n$USER_PASSWORD\n$USER_PASSWORD\n$USER_PASSWORD\n\" | su $USERNAME -c \"cd /home/$USERNAME && git clone https://aur.archlinux.org/yay.git && (cd yay && makepkg -si --noconfirm) && rm -rf yay\""
+    aur_install "autotiling bitwarden-cli lf ncspot networkmanager-dmenu nerd-fonts-fira-code picom-ibhagwan-git pistol-git polybar fortune-mod-calvin"
+    arch-chroot /mnt sed -i 's/%wheel ALL=(ALL) NOPASSWD: ALL/%wheel ALL=(ALL) ALL/' /etc/sudoers
+}
+
+aur_install() {
+    AUR_COMMAND="yay -Syu --noconfirm --needed $1"
+    arch-chroot /mnt bash -c "echo -e \"$USER_PASSWORD\n$USER_PASSWORD\n$USER_PASSWORD\n$USER_PASSWORD\n\" | su $USER_NAME -c \"$AUR_COMMAND\""
+}
+
 ### SETUP ###
 
-# Install Neovim
+# Install Fish & nano
 sudo pacman -S \
     fish \
-    neovim 
+    nano 
 
 # Set Time Zone
 comment "Set correct time zone and set hardware clock accordingly"
@@ -28,7 +97,7 @@ comment "Set time format to display as 24:00"
 echo LC_TIME=nl_NL.UTF-8 >> /etc/locale.conf
 
 # Set hostname
-echo -n "What should this computer be called? "
+echo -n "What should this computer be called?"
 read HOSTNAME
 echo "$HOSTNAME" > /etc/hostname
 
@@ -43,13 +112,21 @@ passwd
 comment "Create user and add to relevant group"
 echo -n "What is your username? "
 read USERNAME
-useradd -m -g users -G wheel,audio,video,optical,storage -s "$(which fish)" $USERNAME
+useradd -m -g users -G wheel,audio,video,optical,storage $USERNAME
 
 comment "Set password of new user"
 passwd $USERNAME
 
 comment "Enable sudo access for group wheel"
 echo "%wheel ALL=(ALL) ALL" > /etc/sudoers.d/sudo-for-wheel-group
+
+# Install micro code
+comment "Install micro code"
+microCode
+
+# Install graphics drivers
+comment "Install graphics drivers"
+graphics
 
 ### INSTALL GRUB ###
 comment "Install bootloader"
@@ -87,5 +164,11 @@ systemctl enable systemd-resolved.service
 
 ### maybe pile ###
 # xcape
+
+# Install yay & AUR packages
+packages_aur
+
+# Change Shell after installing yay
+arch-chroot /mnt chsh -s "$(which fish)" $USERNAME
 
 echo Done!

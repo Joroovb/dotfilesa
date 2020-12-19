@@ -1,7 +1,7 @@
 # Previewer
 set previewer pistol
 # interpreter for shell commands (needs to be POSIX compatible)
-set shell zsh
+set shell bash
 
 # set '-eu' options for shell commands
 # These options are used to have safer shell commands. Option '-e' is used to
@@ -31,11 +31,13 @@ set icons
 # text files and a file opener for the rest.
 cmd open ${{
     case $(file --mime-type $f -b) in
-        text/*) nvim $fx;;
+    */pdf) zathura $f ;;
+    text/*) nvim $fx;;
 	image/*) ~/.config/lf/sxiv-openall.sh $f ;;
 	audio/*) mpv --audio-display=no $f ;;
 	video/*) setsid -f mpv $f -quiet >/dev/null 2>&1 ;;
         *) for f in $fx; do setsid $OPENER $f > /dev/null 2> /dev/null & done;;
+    
     esac
 }}
 
@@ -117,15 +119,15 @@ map gh
 map ~ cd ~
 map . set hidden!
 # use enter for shell commands
-map <enter> shell
+map o shell
 
 # execute current file (must be executable)
 map x $$f
 map X !$f
 
 # dedicated keys for file opener actions
-map o &mimeopen $f
-map O $mimeopen --ask $f
+map <enter> open $f
+
 
 # use '<delete>' key for either 'trash' or 'delete' command
 map <delete> delete
