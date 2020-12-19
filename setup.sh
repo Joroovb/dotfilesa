@@ -1,5 +1,82 @@
 #!/bin/bash
 
+
+DEVICE_SATA="false"
+DEVICE_NVME="false"
+DEVICE_MMC="false"
+
+PS3=$'\n'"What kind of drive is your install target?"$'\n'$'\n'
+
+echo -e "\n"
+
+drives=("HHD" "NVME" "MMC")
+select driveOpt in "${drives[@]}"
+do
+	case $driveOpt in
+		"HHD")
+			DEVICE_SATA="true"
+			break
+			;;
+		"NVME")
+			DEVICE_NVME="true"
+			break
+			;;
+		"MMC")
+			DEVICE_MMC="true"
+			break
+			;;
+		*) echo "Invalid input";;
+	esac
+done
+
+if [ "$DEVICE_SATA" == "true" ]; then
+       	PARTITION_BOOT="${DISK}1"
+        PARTITION_SWAP="${DISK}2"
+        DEVICE_ROOT="${DISK}3"
+fi
+
+if [ "$DEVICE_NVME" == "true" ]; then
+        PARTITION_BOOT="${DISK}p1"
+        PARTITION_SWAP="${DISK}p2"
+        DEVICE_ROOT="${DISK}p3"
+fi
+
+if [ "$DEVICE_MMC" == "true" ]; then
+        PARTITION_BOOT="${DISK}p1"
+        PARTITION_SWAP="${DISK}p2"
+        DEVICE_ROOT="${DISK}p3"
+fi
+
+# Mount the root partition
+mount /dev/$DEVICE_ROOT /mnt
+
+# Select mirrors
+comment "Install reflector tool and rate best download mirrors"
+pacman -Sy --noconfirm reflector
+reflector --country Netherlands --age 12 --protocol https --sort rate --save /etc/pacman.d/mirrorlist
+
+# Enable Pacman features
+sed -i 's/#Color/Color/' /etc/pacman.conf
+sed -i 's/#TotalDownload/TotalDownload/' /etc/pacman.conf
+
+# Install base system
+pacstrap /mnt base base-devel linux linux-headers linux-firmware
+
+# Generate fstab
+comment "Generate /etc/fstab"
+genfstab -U /mnt >> /mnt/etc/fstab
+
+# Enable 32-bits packages
+echo "" >> /mnt/etc/pacman.conf
+echo "[multilib]" >> /mnt/etc/pacman.conf
+echo "Include = /etc/pacman.d/mirrorlist" >> /mnt/etc/pacman.conf
+echo "" >> /mnt/etc/pacman.conf
+
+
+#######
+
+
+
 comment() {
     echo ">> $(tput setaf 2) $@$(tput sgr0)" >&2
 }
@@ -72,6 +149,8 @@ aur_install() {
     AUR_COMMAND="yay -Syu --noconfirm --needed $1"
     arch-chroot /mnt bash -c "echo -e \"$USER_PASSWORD\n$USER_PASSWORD\n$USER_PASSWORD\n$USER_PASSWORD\n\" | su $USER_NAME -c \"$AUR_COMMAND\""
 }
+
+https://raw.githubusercontent.com/Joroovb/dotfiles/master/installer.sh
 
 ### SETUP ###
 
