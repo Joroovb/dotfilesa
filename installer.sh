@@ -56,7 +56,7 @@ DEVICE_MMC="false"
 
 PS3=$'\n'"What kind of drive is your install target?"$'\n'$'\n'
 
-# echo -e "\n"
+echo -e
 
 drives=("HHD" "NVME" "MMC")
 select driveOpt in "${drives[@]}"
