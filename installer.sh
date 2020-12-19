@@ -65,6 +65,19 @@ graphics() {
     done
 }
 
+packages_aur() {
+    arch-chroot /mnt sed -i 's/%wheel ALL=(ALL) ALL/%wheel ALL=(ALL) NOPASSWD: ALL/' /etc/sudoers
+    pacman_install "git"
+    arch-chroot /mnt bash -c "echo -e \"$USER_PASSWORD\n$USER_PASSWORD\n$USER_PASSWORD\n$USER_PASSWORD\n\" | su $USERNAME -c \"cd /home/$USERNAME && git clone https://aur.archlinux.org/yay.git && (cd yay && makepkg -si --noconfirm) && rm -rf yay\""
+    aur_install "autotiling bitwarden-cli lf ncspot networkmanager-dmenu nerd-fonts-fira-code picom-ibhagwan-git pistol-git polybar fortune-mod-calvin"
+    arch-chroot /mnt sed -i 's/%wheel ALL=(ALL) NOPASSWD: ALL/%wheel ALL=(ALL) ALL/' /etc/sudoers
+}
+
+aur_install() {
+    AUR_COMMAND="yay -Syu --noconfirm --needed $1"
+    arch-chroot /mnt bash -c "echo -e \"$USER_PASSWORD\n$USER_PASSWORD\n$USER_PASSWORD\n$USER_PASSWORD\n\" | su $USER_NAME -c \"$AUR_COMMAND\""
+}
+
 PACKS="fish nano git dosfstools efibootmgr grub mtools os-prober dialog wpa_supplicant dhcpcd netctl dialog wpa_supplicant dhcpcd netctl"
 
 # CONFIG
@@ -255,10 +268,13 @@ comment "Making boot folder at /boot/EFI"
 mkdir /mnt/boot/EFI
 
 comment "Mounting boot partition"
-mount $PARTITION_BOOT /mnt/boot/EFI
+mount $PARTITION_BOOT /mnt/boot/E3FI
 
 comment "Installing Grub"
 arch-chroot /mnt grub-install --target=x86_64-efi  --bootloader-id=grub_uefi --recheck
-grub-mkconfig -o /mnt/boot/grub/grub.cfg
+arch-chroot /mnt grub-mkconfig -o /boot/grub/grub.cfg
+
+comment "Installing yay & packages"
+packages_aur
 
 echo "First Test Done" 
