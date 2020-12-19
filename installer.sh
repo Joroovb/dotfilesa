@@ -101,7 +101,7 @@ comment "Formatting partitions"
 mkfs.fat -F32 $PARTITION_BOOT
 mkswap $PARTITION_SWAP
 swapon $PARTITION_SWAP
-mkfs.ext4 $PARTITION_ROOT
+mkfs.ext4 $DEVICE_ROOT
 
 # Mount the root partition
 comment "Mounting root partitions"
