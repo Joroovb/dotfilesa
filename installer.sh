@@ -8,6 +8,19 @@ fail() {
     echo "$(tput bold; tput setaf 5)$@$(tput sgr0)" >&2
 }
 
+# CONFIG
+echo -n "What is your username? "
+read USERNAME
+
+comment "Set password of new user"
+read PASSWORD
+
+comment "Set root password"
+read ROOT_PASSWORD
+
+echo -n "What should this computer be called?"
+read HOSTNAME
+
 # Set clock
 timedatectl set-ntp true
 
@@ -101,7 +114,7 @@ comment "Formatting partitions"
 mkfs.fat -F32 $PARTITION_BOOT
 mkswap $PARTITION_SWAP
 swapon $PARTITION_SWAP
-mkfs.ext4 $DEVICE_ROOT
+mkfs.ext4 $DEVICE_ROOT -F
 
 # Mount the root partition
 comment "Mounting root partitions"
@@ -147,30 +160,26 @@ comment "Set time format to display as 24:00"
 echo LC_TIME=nl_NL.UTF-8 >> /mnt/etc/locale.conf
 
 # Set hostname
-echo -n "What should this computer be called?"
-read HOSTNAME
 echo "$HOSTNAME" > /mnt/etc/hostname
 
 # GOTTA FIX THIS
-cp -f ${PWD}/hosts /etc/hosts
-echo -e "\n127.0.1.1\t$HOSTNAME.localdomain\t$HOSTNAME" >> /etc/hosts
+# cp -f ${PWD}/hosts /etc/hosts
+# echo -e "\n127.0.1.1\t$HOSTNAME.localdomain\t$HOSTNAME" >> /etc/hosts
 
 # Setup root Password
-comment "Set root password"
-arch-chroot /mnt passwd
+#arch-chroot /mnt passwd
+printf "$ROOT_PASSWORD\n$ROOT_PASSWORD" | arch-chroot /mnt passwd
 
 # Setup User
 comment "Create user and add to relevant group"
-echo -n "What is your username? "
-read USERNAME
 arch-chroot /mnt useradd -m -g users -G wheel,audio,video,optical,storage $USERNAME
 
 comment "Set password of new user"
-arch-chroot /mnt passwd $USERNAME
+# arch-chroot /mnt passwd $USERNAME
+printf "$PASSWORD\n$PASSWORD" | arch-chroot /mnt passwd $USERNAME
 
 comment "Enable sudo access for group wheel"
 echo "%wheel ALL=(ALL) ALL" > /mnt/etc/sudoers.d/sudo-for-wheel-group
-# printf "$PASSWORD\n$PASSWORD" | arch-chroot /mnt passwd $USER
 
 # Install packages
 comment "Installing packages"
@@ -189,6 +198,6 @@ arch-chroot /mnt pacman -Syu --noconfirm --needed \
         dialog \
         wpa_supplicant \
         dhcpcd \
-        netctl \
+        netctl 
 
 echo "First Test Done"
