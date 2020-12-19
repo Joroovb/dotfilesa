@@ -149,13 +149,13 @@ https://raw.githubusercontent.com/Joroovb/dotfiles/master/installer.sh
 #graphics
 
 ### INSTALL GRUB ###
-comment "Install bootloader"
+#comment "Install bootloader"
 #sudo pacman -S \
-    dosfstools \
-    efibootmgr \
-    grub \
-    mtools \
-    os-prober
+#    dosfstools \
+#    efibootmgr \
+#    grub \
+#    mtools \
+#    os-prober
 
 comment "Making boot folder at /boot/EFI"
 mkdir /boot/EFI
@@ -163,7 +163,7 @@ mkdir /boot/EFI
 lsblk
 comment "What is your boot partition?"
 read BOOTPART
-mount /dev/$BOOTPART /boot/EFI
+mount $PARTITION_BOOT /boot/EFI
 
 comment "Installing Grub"
 grub-install --target=x86_64-efi  --bootloader-id=grub_uefi --recheck
@@ -172,12 +172,12 @@ grub-mkconfig -o /boot/grub/grub.cfg
 comment "Copy dotfiles to new user"
 cp -r ${PWD} /home/$USERNAME
 
-comment "Install networking"
+#comment "Install networking"
 # sudo pacman -S \
-    dialog \
-    wpa_supplicant \
-    dhcpcd \
-    netctl
+#    dialog \
+#    wpa_supplicant \
+#    dhcpcd \
+#    netctl
 
 # Enable services
 systemctl enable systemd-resolved.service
