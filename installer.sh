@@ -1,4 +1,4 @@
-#!/usr/bin/bash
+#!/bin/bash
 
 comment() {
     echo ">> $(tput setaf 2) $@$(tput sgr0)" >&2
