@@ -13,7 +13,7 @@ timedatectl set-ntp true
 
 # Select mirrors
 comment "Install reflector tool and rate best download mirrors"
-pacman -S reflector
+pacman -Sy --noconfirm reflector
 reflector --country Netherlands --age 12 --protocol https --sort rate --save /etc/pacman.d/mirrorlist
 
 # Prepare disk for Installation
