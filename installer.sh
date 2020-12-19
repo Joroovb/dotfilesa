@@ -54,7 +54,7 @@ DEVICE_SATA="false"
 DEVICE_NVME="false"
 DEVICE_MMC="false"
 
-PS3=$'\n'"What kind of drive is your install target?"$'\n'$'\n'
+PS3="What kind of drive is your install target?"$'\n'$'\n'
 
 echo -e "\n"
 
@@ -79,24 +79,32 @@ do
 done
 
 if [ "$DEVICE_SATA" == "true" ]; then
-       	PARTITION_BOOT="${DISK}1"
-        PARTITION_SWAP="${DISK}2"
-        DEVICE_ROOT="${DISK}3"
+       	PARTITION_BOOT="${DISKPATH}1"
+        PARTITION_SWAP="${DISKPATH}2"
+        DEVICE_ROOT="${DISKPATH}3"
 fi
 
 if [ "$DEVICE_NVME" == "true" ]; then
-        PARTITION_BOOT="${DISK}p1"
-        PARTITION_SWAP="${DISK}p2"
-        DEVICE_ROOT="${DISK}p3"
+        PARTITION_BOOT="${DISKPATH}p1"
+        PARTITION_SWAP="${DISKPATH}p2"
+        DEVICE_ROOT="${DISKPATH}p3"
 fi
 
 if [ "$DEVICE_MMC" == "true" ]; then
-        PARTITION_BOOT="${DISK}p1"
-        PARTITION_SWAP="${DISK}p2"
-        DEVICE_ROOT="${DISK}p3"
+        PARTITION_BOOT="${DISKPATH}p1"
+        PARTITION_SWAP="${DISKPATH}p2"
+        DEVICE_ROOT="${DISKPATH}p3"
 fi
 
+# Format Partitions
+comment "Formatting partitions"
+mkfs.fat -F32 $PARTITION_BOOT
+mkswap $PARTITION_SWAP
+swapon $PARTITION_SWAP
+mkfs.ext4 $PARTITION_ROOT
+
 # Mount the root partition
+comment "Mounting root partitions"
 mount /dev/$DEVICE_ROOT /mnt
 
 # Select mirrors
@@ -109,6 +117,7 @@ sed -i 's/#Color/Color/' /etc/pacman.conf
 sed -i 's/#TotalDownload/TotalDownload/' /etc/pacman.conf
 
 # Install base system
+comment "Installing base system"
 pacstrap /mnt base base-devel linux linux-headers linux-firmware
 
 # Generate fstab
