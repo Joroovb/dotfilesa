@@ -65,6 +65,8 @@ graphics() {
     done
 }
 
+PACKS="fish nano git dosfstools efibootmgr grub mtools os-prober dialog wpa_supplicant dhcpcd netctl"
+
 # CONFIG
 comment "What is your username? "
 read USERNAME
@@ -81,6 +83,8 @@ read HOSTNAME
 microCode
 
 graphics
+
+PACKAGES_PACMAN="$PACKS $GRAPHICSPACKS $CPUPACK"
 
 # Set clock
 timedatectl set-ntp true
@@ -245,21 +249,6 @@ echo "%wheel ALL=(ALL) ALL" > /mnt/etc/sudoers.d/sudo-for-wheel-group
 # Install packages
 # MAKE PACKS LIST AND FEED INTO PACMAN
 comment "Installing packages"
-arch-chroot /mnt pacman -Syu --noconfirm --needed \ # NEEDS TO BE ONE LINE
-        # Utility
-        fish \
-        nano \
-        git \
-        # Bootloader
-        dosfstools \
-        efibootmgr \
-        grub \
-        mtools \
-        os-prober \
-        # Networking
-        dialog \
-        wpa_supplicant \
-        dhcpcd \
-        netctl 
+arch-chroot /mnt pacman -Syu --noconfirm --needed "$PACKAGES_PACMAN"
 
 echo "First Test Done"
