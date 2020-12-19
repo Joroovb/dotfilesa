@@ -249,6 +249,6 @@ echo "%wheel ALL=(ALL) ALL" > /mnt/etc/sudoers.d/sudo-for-wheel-group
 # Install packages
 # MAKE PACKS LIST AND FEED INTO PACMAN
 comment "Installing packages"
-arch-chroot /mnt pacman -Syu --noconfirm --needed "$PACKAGES_PACMAN"
+arch-chroot /mnt pacman -Syu --noconfirm --needed $PACKAGES_PACMAN
 
-echo "First Test Done"
+echo "First Test Done" 
