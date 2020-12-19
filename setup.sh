@@ -1,13 +1,5 @@
 #!/bin/bash
 
-
-
-
-
-#######
-
-
-
 comment() {
     echo ">> $(tput setaf 2) $@$(tput sgr0)" >&2
 }
@@ -81,54 +73,71 @@ aur_install() {
     arch-chroot /mnt bash -c "echo -e \"$USER_PASSWORD\n$USER_PASSWORD\n$USER_PASSWORD\n$USER_PASSWORD\n\" | su $USER_NAME -c \"$AUR_COMMAND\""
 }
 
+pacman_install() {
+    arch-chroot /mnt pacman -Syu --noconfirm --needed \
+        # Utility
+        fish \
+        nano \
+        # Bootloader
+        dosfstools \
+        efibootmgr \
+        grub \
+        mtools \
+        os-prober \
+        # Networking
+        dialog \
+        wpa_supplicant \
+        dhcpcd \
+        netctl \
+}
 https://raw.githubusercontent.com/Joroovb/dotfiles/master/installer.sh
 
 ### SETUP ###
 
 # Install Fish & nano
-sudo pacman -S \
-    fish \
-    nano 
+#sudo pacman -S \
+#    fish \
+#    nano 
 
 # Set Time Zone
-comment "Set correct time zone and set hardware clock accordingly"
-ln -sf /usr/share/zoneinfo/Europe/Amsterdam /etc/localtime
-hwclock --systohc
+#comment "Set correct time zone and set hardware clock accordingly"
+#ln -sf /usr/share/zoneinfo/Europe/Amsterdam /etc/localtime
+#hwclock --systohc
 
 # Set Locale
-comment "Set default locales and generate locales"
-echo "en_US.UTF-8 UTF-8" >> /etc/locale.gen
-echo "nl_NL.UTF-8 UTF-8" >> /etc/locale.gen
-locale-gen
+#comment "Set default locales and generate locales"
+#echo "en_US.UTF-8 UTF-8" >> /etc/locale.gen
+#echo "nl_NL.UTF-8 UTF-8" >> /etc/locale.gen
+#locale-gen
 
-comment "Set default language to American English"
-echo LANG=en_US.UTF-8 >> /etc/locale.conf
-comment "Set time format to display as 24:00"
-echo LC_TIME=nl_NL.UTF-8 >> /etc/locale.conf
+#comment "Set default language to American English"
+#echo LANG=en_US.UTF-8 >> /mnt/etc/locale.conf
+#comment "Set time format to display as 24:00"
+#echo LC_TIME=nl_NL.UTF-8 >> /mnt/etc/locale.conf
 
 # Set hostname
-echo -n "What should this computer be called?"
-read HOSTNAME
-echo "$HOSTNAME" > /etc/hostname
+#echo -n "What should this computer be called?"
+#read HOSTNAME
+#echo "$HOSTNAME" > /etc/hostname
 
-cp -f ${PWD}/hosts /etc/hosts
-echo -e "\n127.0.1.1\t$HOSTNAME.localdomain\t$HOSTNAME" >> /etc/hosts
+#cp -f ${PWD}/hosts /etc/hosts
+#echo -e "\n127.0.1.1\t$HOSTNAME.localdomain\t$HOSTNAME" >> /etc/hosts
 
 # Setup root Password
-comment "Set root password"
-passwd
+#comment "Set root password"
+#passwd
 
 # Setup User
-comment "Create user and add to relevant group"
-echo -n "What is your username? "
-read USERNAME
-useradd -m -g users -G wheel,audio,video,optical,storage $USERNAME
+#comment "Create user and add to relevant group"
+#echo -n "What is your username? "
+#read USERNAME
+#useradd -m -g users -G wheel,audio,video,optical,storage $USERNAME
 
-comment "Set password of new user"
-passwd $USERNAME
+#comment "Set password of new user"
+#passwd $USERNAME
 
-comment "Enable sudo access for group wheel"
-echo "%wheel ALL=(ALL) ALL" > /etc/sudoers.d/sudo-for-wheel-group
+#comment "Enable sudo access for group wheel"
+#echo "%wheel ALL=(ALL) ALL" > /etc/sudoers.d/sudo-for-wheel-group
 
 # Install micro code
 comment "Install micro code"
@@ -140,7 +149,7 @@ graphics
 
 ### INSTALL GRUB ###
 comment "Install bootloader"
-sudo pacman -S \
+#sudo pacman -S \
     dosfstools \
     efibootmgr \
     grub \
@@ -163,7 +172,7 @@ comment "Copy dotfiles to new user"
 cp -r ${PWD} /home/$USERNAME
 
 comment "Install networking"
-sudo pacman -S \
+# sudo pacman -S \
     dialog \
     wpa_supplicant \
     dhcpcd \

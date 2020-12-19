@@ -130,5 +130,65 @@ echo "[multilib]" >> /mnt/etc/pacman.conf
 echo "Include = /etc/pacman.d/mirrorlist" >> /mnt/etc/pacman.conf
 echo "" >> /mnt/etc/pacman.conf
 
+# Set Time Zone
+comment "Set correct time zone and set hardware clock accordingly"
+arch-chroot /mnt ln -s -f /usr/share/zoneinfo/Europe/Amsterdam /etc/localtime
+arch-chroot /mnt hwclock --systohc
+
+# Set Locale
+comment "Set default locales and generate locales"
+echo "en_US.UTF-8 UTF-8" >> /mnt/etc/locale.gen
+echo "nl_NL.UTF-8 UTF-8" >> /mnt/etc/locale.gen
+arch-chroot /mnt locale-gen
+
+comment "Set default language to American English"
+echo LANG=en_US.UTF-8 >> /mnt/etc/locale.conf
+comment "Set time format to display as 24:00"
+echo LC_TIME=nl_NL.UTF-8 >> /mnt/etc/locale.conf
+
+# Set hostname
+echo -n "What should this computer be called?"
+read HOSTNAME
+echo "$HOSTNAME" > /mnt/etc/hostname
+
+# GOTTA FIX THIS
+cp -f ${PWD}/hosts /etc/hosts
+echo -e "\n127.0.1.1\t$HOSTNAME.localdomain\t$HOSTNAME" >> /etc/hosts
+
+# Setup root Password
+comment "Set root password"
+arch-chroot /mnt passwd
+
+# Setup User
+comment "Create user and add to relevant group"
+echo -n "What is your username? "
+read USERNAME
+arch-chroot /mnt useradd -m -g users -G wheel,audio,video,optical,storage $USERNAME
+
+comment "Set password of new user"
+arch-chroot /mnt passwd $USERNAME
+
+comment "Enable sudo access for group wheel"
+echo "%wheel ALL=(ALL) ALL" > /mnt/etc/sudoers.d/sudo-for-wheel-group
+# printf "$PASSWORD\n$PASSWORD" | arch-chroot /mnt passwd $USER
+
+# Install packages
+comment "Installing packages"
+arch-chroot /mnt pacman -Syu --noconfirm --needed \
+        # Utility
+        fish \
+        nano \
+        git \
+        # Bootloader
+        dosfstools \
+        efibootmgr \
+        grub \
+        mtools \
+        os-prober \
+        # Networking
+        dialog \
+        wpa_supplicant \
+        dhcpcd \
+        netctl \
 
 echo "First Test Done"

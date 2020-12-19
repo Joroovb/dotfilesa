@@ -1,5 +1,21 @@
 #!/bin/bash
 
+
+
+### NOTES
+
+    # TRIM
+    if [ "$DEVICE_TRIM" == "true" ]; then
+        if [ "$FILE_SYSTEM_TYPE" == "f2fs" ]; then
+            sed -i 's/relatime/noatime,nodiscard/' /mnt/etc/fstab
+        else
+            sed -i 's/relatime/noatime/' /mnt/etc/fstab
+        fi
+        arch-chroot /mnt systemctl enable fstrim.timer
+    fi
+
+
+### END OF NOTES
 comment() {
     echo ">> $(tput setaf 2) $@$(tput sgr0)" >&2
 }
