@@ -15,6 +15,7 @@ timedatectl set-ntp true
 lsblk
 comment "Where do you want to install Arch?"
 read DISK
+DISKPATH="/dev/$DISK"
 
 echo "We will install on $(tput bold; tput setaf 1)$DISK$(tput sgr0)! This is the last moment to press Ctrl+C."
 echo -n "Enter to continue..."
@@ -43,7 +44,7 @@ n
 
 8300
 w
-y' | gdisk "$DISK"
+y' | gdisk "$DISKPATH"
 then
     fail "Cannot setup device partitions"
     exit 1
