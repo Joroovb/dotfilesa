@@ -30,10 +30,10 @@ sudo pacman -S \
     zathura 
 
 # Install yay
-comment "Installing Yay AUR Helper"
-git clone https://aur.archlinux.org/yay.git ~/yay
-cd ~/yay
-makepkg -si
+#comment "Installing Yay AUR Helper"
+#git clone https://aur.archlinux.org/yay.git ~/yay
+#cd ~/yay
+#makepkg -si
 
 # Install AUR software
 yay -Syu autotiling bitwarden-cli lf ncspot networkmanager-dmenu nerd-fonts-fira-code picom-ibhagwan-git pistol-git polybar fortune-mod-calvin

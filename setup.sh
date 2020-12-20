@@ -165,9 +165,9 @@ https://raw.githubusercontent.com/Joroovb/dotfiles/master/installer.sh
 #read BOOTPART
 #mount $PARTITION_BOOT /boot/EFI
 
-comment "Installing Grub"
-grub-install --target=x86_64-efi  --bootloader-id=grub_uefi --recheck
-grub-mkconfig -o /boot/grub/grub.cfg
+#comment "Installing Grub"
+#grub-install --target=x86_64-efi  --bootloader-id=grub_uefi --recheck
+#grub-mkconfig -o /boot/grub/grub.cfg
 
 comment "Copy dotfiles to new user"
 cp -r ${PWD} /home/$USERNAME

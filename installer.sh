@@ -68,6 +68,7 @@ graphics() {
 packages_aur() {
     arch-chroot /mnt sed -i 's/%wheel ALL=(ALL) ALL/%wheel ALL=(ALL) NOPASSWD: ALL/' /etc/sudoers
     arch-chroot /mnt bash -c "echo -e \"$USER_PASSWORD\n$USER_PASSWORD\n$USER_PASSWORD\n$USER_PASSWORD\n$USER_PASSWORD\" | sudo -u $USERNAME -S bash -c \"cd /home/$USERNAME && git clone https://aur.archlinux.org/yay.git && (cd yay && makepkg -si --noconfirm) && rm -rf yay\""    aur_install "autotiling bitwarden-cli lf ncspot networkmanager-dmenu nerd-fonts-fira-code picom-ibhagwan-git pistol-git polybar fortune-mod-calvin"
+    aur_install AUR_PACKS
     arch-chroot /mnt sed -i 's/%wheel ALL=(ALL) NOPASSWD: ALL/%wheel ALL=(ALL) ALL/' /etc/sudoers
 }
 
@@ -77,6 +78,7 @@ aur_install() {
 }
 
 PACKS="fish nano git dosfstools efibootmgr grub mtools os-prober dialog wpa_supplicant dhcpcd netctl dialog wpa_supplicant dhcpcd netctl"
+AUR_PACKS="autotiling bitwarden-cli lf ncspot networkmanager-dmenu nerd-fonts-fira-code picom-ibhagwan-git pistol-git polybar fortune-mod-calvin"
 
 # CONFIG
 comment "What is your username? "
@@ -274,6 +276,12 @@ arch-chroot /mnt grub-mkconfig -o /boot/grub/grub.cfg
 
 comment "Installing yay & packages"
 packages_aur
-# Installing yay doesn't work
+
+
+
+
+
+
+arch-chroot /mnt chsh -s "$(which fish)" $USERNAME
 
 echo "First Test Done" 
