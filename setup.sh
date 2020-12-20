@@ -186,7 +186,7 @@ systemctl enable systemd-resolved.service
 # xcape
 
 # Install yay & AUR packages
-packages_aur
+# packages_aur
 
 # Change Shell after installing yay
 arch-chroot /mnt chsh -s "$(which fish)" $USERNAME
