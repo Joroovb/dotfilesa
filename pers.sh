@@ -36,17 +36,17 @@ sudo pacman -S \
 #makepkg -si
 
 # Install AUR software
-yay -Syu autotiling bitwarden-cli lf ncspot networkmanager-dmenu nerd-fonts-fira-code picom-ibhagwan-git pistol-git polybar fortune-mod-calvin
+# yay -Syu autotiling bitwarden-cli lf ncspot networkmanager-dmenu nerd-fonts-fira-code picom-ibhagwan-git pistol-git polybar fortune-mod-calvin
 
 # Create environment file for ssh
-touch ~/.ssh/environment
+# touch ~/.ssh/environment
     
 # Configure ufw.
-sudo ufw default deny incoming
-sudo ufw default allow outgoing
+#sudo ufw default deny incoming
+#sudo ufw default allow outgoing
 
 ### Enable Services ###
-sudo systemctl enable NetworkManager
+# sudo systemctl enable NetworkManager
 
 ### THEMING ###
 

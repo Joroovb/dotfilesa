@@ -79,7 +79,9 @@ aur_install() {
     arch-chroot /mnt bash -c "echo -e \"$PASSWORD\n$PASSWORD\n$PASSWORD\n$PASSWORD\n\" | sudo -u $USERNAME -S bash -c \"$AUR_COMMAND\""
 }
 
-PACKS="fish nano git dosfstools efibootmgr grub mtools os-prober dialog wpa_supplicant dhcpcd netctl dialog wpa_supplicant dhcpcd netctl"
+# dialog wpa_supplicant dhcpcd netctl dialog wpa_supplicant dhcpcd netctl
+
+PACKS="fish nano git dosfstools efibootmgr grub mtools os-prober networkmanager bat calcurse cowsay dmenu dunst fd feh fortune-mod fzf i3-gaps lxappearance openssh playerctl rofi termite ufw wget wireless_tools qutebrowser zathura xorg xorg-xinit"
 AUR_PACKS="autotiling bitwarden-cli lf ncspot networkmanager-dmenu nerd-fonts-fira-code picom-ibhagwan-git pistol-git polybar fortune-mod-calvin"
 
 # CONFIG
@@ -284,6 +286,16 @@ packages_aur
 
 
 
-arch-chroot /mnt chsh -s "$(which fish)" $USERNAME
+arch-chroot /mnt chsh -s /usr/bin/fish $USERNAME
+
+# Create environment file for ssh
+touch /mnt/home/$USERNAME/.ssh/environment
+
+arch-chroot /mnt ufw default deny incoming
+arch-chroot /mnt ufw default allow outgoing
+
+# Services
+comment "Enabling services"
+arch-chroot /mnt systemctl enable NetworkManager.service
 
 echo "First Test Done" 
