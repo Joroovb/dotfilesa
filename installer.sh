@@ -81,7 +81,7 @@ aur_install() {
 
 # dialog wpa_supplicant dhcpcd netctl dialog wpa_supplicant dhcpcd netctl
 
-PACKS="fish nano git dosfstools efibootmgr grub mtools os-prober networkmanager bat calcurse cowsay dmenu dunst fd feh fortune-mod fzf i3-gaps lxappearance openssh playerctl rofi termite ufw wget wireless_tools qutebrowser zathura xorg xorg-xinit"
+PACKS="fish nano git dosfstools efibootmgr grub mtools os-prober networkmanager bat calcurse cowsay dmenu dunst fd feh fortune-mod fzf i3-gaps lxappearance openssh playerctl rofi termite ufw wget wireless_tools qutebrowser zathura xorg xorg-xinit wget"
 AUR_PACKS="autotiling networkmanager-dmenu nerd-fonts-fira-code polybar"
 #"autotiling bitwarden-cli lf ncspot networkmanager-dmenu nerd-fonts-fira-code picom-ibhagwan-git pistol-git polybar fortune-mod-calvin"
 
@@ -295,22 +295,22 @@ arch-chroot /mnt ufw default allow outgoing
 
 # Create .themes folder
 APPEARDIR=/mnt/home/$USERNAME/.themes/
-sudo mkdir -p $APPEARDIR
+mkdir -p $APPEARDIR
 
 # Install latest version of Dracula GTK theme
 git clone https://github.com/dracula/gtk.git
-sudo mv "gtk/" "Dracula/"
-sudo cp -r "Dracula/" "/mnt/home/$USERNAME/.themes/"
+mv "gtk/" "Dracula/"
+cp -r "Dracula/" "/mnt/home/$USERNAME/.themes/"
 rm -r "Dracula/" 
 
 # Install papirus icons & folders
 wget -qO- https://git.io/papirus-icon-theme-install | DESTDIR="/mnt/home/$USERNAME/.icons" sh
-sudo chmod -R u=rwx,g=rwx ~/.icons
+arch-chroot /mnt chmod -R u=rwx,g=rwx /mnt/home/$USERNAME/.icons
 wget -qO- https://git.io/papirus-folders-install | sh
-papirus-folders -C bluegrey --theme Papirus-Dark
+arch-chroot /mnt papirus-folders -C bluegrey --theme Papirus-Dark
 
 # Install the latest version  of Spaceship
-arch-chroot /mnt curl -fsSL https://starship.rs/install.sh | bash
+arch-chroot /mnt curl -fsSL https://starship.rs/install.sh | bash -s -- -y
 
 # Services
 comment "Enabling services"
