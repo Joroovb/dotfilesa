@@ -53,23 +53,23 @@ sudo pacman -S \
 cd ~/dotfiles
 
 # Create .themes folder
-APPEARDIR=$HOME/.themes/
+APPEARDIR=/mnt/home/$USERNAME/.themes/
 sudo mkdir -p $APPEARDIR
 
 # Install latest version of Dracula GTK theme
 git clone https://github.com/dracula/gtk.git
 sudo mv "gtk/" "Dracula/"
-sudo cp -r "Dracula/" "${HOME}/.themes/"
+sudo cp -r "Dracula/" "/mnt/home/$USERNAME/.themes/"
 rm -r "Dracula/" 
 
 # Install papirus icons & folders
-wget -qO- https://git.io/papirus-icon-theme-install | DESTDIR="$HOME/.icons" sh
+wget -qO- https://git.io/papirus-icon-theme-install | DESTDIR="/mnt/home/$USERNAME/.icons" sh
 sudo chmod -R u=rwx,g=rwx ~/.icons
 wget -qO- https://git.io/papirus-folders-install | sh
 papirus-folders -C bluegrey --theme Papirus-Dark
 
 # Install the latest version  of Spaceship
-curl -fsSL https://starship.rs/install.sh | bash
+arch-chroot /mnt curl -fsSL https://starship.rs/install.sh | bash
 
 # Create symlink for vimrc
 mv -v ~/.vimrc ~/.vimrc.old

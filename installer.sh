@@ -82,7 +82,8 @@ aur_install() {
 # dialog wpa_supplicant dhcpcd netctl dialog wpa_supplicant dhcpcd netctl
 
 PACKS="fish nano git dosfstools efibootmgr grub mtools os-prober networkmanager bat calcurse cowsay dmenu dunst fd feh fortune-mod fzf i3-gaps lxappearance openssh playerctl rofi termite ufw wget wireless_tools qutebrowser zathura xorg xorg-xinit"
-AUR_PACKS="autotiling bitwarden-cli lf ncspot networkmanager-dmenu nerd-fonts-fira-code picom-ibhagwan-git pistol-git polybar fortune-mod-calvin"
+AUR_PACKS="autotiling networkmanager-dmenu nerd-fonts-fira-code polybar"
+#"autotiling bitwarden-cli lf ncspot networkmanager-dmenu nerd-fonts-fira-code picom-ibhagwan-git pistol-git polybar fortune-mod-calvin"
 
 # CONFIG
 comment "What is your username? "
@@ -281,18 +282,35 @@ arch-chroot /mnt grub-mkconfig -o /boot/grub/grub.cfg
 comment "Installing yay & packages"
 packages_aur
 
-
-
-
-
-
 arch-chroot /mnt chsh -s /usr/bin/fish $USERNAME
 
 # Create environment file for ssh
-# touch /mnt/home/$USERNAME/.ssh/environment
+mkdir /mnt/home/$USERNAME/.ssh
+touch /mnt/home/$USERNAME/.ssh/environment
 
 arch-chroot /mnt ufw default deny incoming
 arch-chroot /mnt ufw default allow outgoing
+
+### THEMING ###
+
+# Create .themes folder
+APPEARDIR=/mnt/home/$USERNAME/.themes/
+sudo mkdir -p $APPEARDIR
+
+# Install latest version of Dracula GTK theme
+git clone https://github.com/dracula/gtk.git
+sudo mv "gtk/" "Dracula/"
+sudo cp -r "Dracula/" "/mnt/home/$USERNAME/.themes/"
+rm -r "Dracula/" 
+
+# Install papirus icons & folders
+wget -qO- https://git.io/papirus-icon-theme-install | DESTDIR="/mnt/home/$USERNAME/.icons" sh
+sudo chmod -R u=rwx,g=rwx ~/.icons
+wget -qO- https://git.io/papirus-folders-install | sh
+papirus-folders -C bluegrey --theme Papirus-Dark
+
+# Install the latest version  of Spaceship
+arch-chroot /mnt curl -fsSL https://starship.rs/install.sh | bash
 
 # Services
 comment "Enabling services"
