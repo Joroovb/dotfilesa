@@ -68,7 +68,7 @@ graphics() {
 packages_aur() {
     arch-chroot /mnt sed -i 's/%wheel ALL=(ALL) ALL/%wheel ALL=(ALL) NOPASSWD: ALL/' /etc/sudoers
     # 1x enter te weinig
-    arch-chroot /mnt bash -c "echo -e \"$PASSWORD\n$PASSWORD\n$PASSWORD\n$PASSWORD\n$PASSWORD\n\" | sudo -u $USERNAME -S bash -c \"cd /home/$USERNAME && git clone https://aur.archlinux.org/yay.git && (cd yay && makepkg -si --noconfirm) && rm -rf yay\""    
+    arch-chroot /mnt bash -c "echo -e \"$PASSWORD\n\" | sudo -u $USERNAME -S bash -c \"cd /home/$USERNAME && git clone https://aur.archlinux.org/yay.git && (cd yay && makepkg -si --noconfirm) && rm -rf yay\""    
     #aur_install "autotiling bitwarden-cli lf ncspot networkmanager-dmenu nerd-fonts-fira-code picom-ibhagwan-git pistol-git polybar fortune-mod-calvin"
     aur_install $AUR_PACKS
     arch-chroot /mnt sed -i 's/%wheel ALL=(ALL) NOPASSWD: ALL/%wheel ALL=(ALL) ALL/' /etc/sudoers
@@ -79,11 +79,11 @@ aur_install() {
     arch-chroot /mnt bash -c "echo -e \"$PASSWORD\n$PASSWORD\n$PASSWORD\n$PASSWORD\n\" | sudo -u $USERNAME -S bash -c \"$AUR_COMMAND\""
 }
 
-# dialog wpa_supplicant dhcpcd netctl dialog wpa_supplicant dhcpcd netctl
-
-PACKS="fish nano git dosfstools efibootmgr grub mtools os-prober networkmanager bat calcurse cowsay dmenu dunst fd feh fortune-mod fzf i3-gaps lxappearance openssh playerctl rofi termite ufw wget wireless_tools qutebrowser zathura xorg xorg-xinit wget"
+PACKS="fish nano git dosfstools efibootmgr grub mtools os-prober networkmanager bat calcurse cowsay dmenu dunst fd feh fortune-mod fzf i3-gaps lxappearance openssh playerctl rofi termite ufw wget wireless_tools qutebrowser zathura xorg xorg-xinit"
 AUR_PACKS="autotiling networkmanager-dmenu nerd-fonts-fira-code polybar"
 #"autotiling bitwarden-cli lf ncspot networkmanager-dmenu nerd-fonts-fira-code picom-ibhagwan-git pistol-git polybar fortune-mod-calvin"
+
+ arch-chroot /mnt bash -c "echo -e \"$PASSWORD\n\" | sudo -u $USERNAME -S bash -c \"cd /home/$USERNAME && git clone https://aur.archlinux.org/yay.git && (cd yay && makepkg -si --noconfirm) && rm -rf yay\""  
 
 # CONFIG
 comment "What is your username? "
@@ -298,16 +298,17 @@ APPEARDIR=/mnt/home/$USERNAME/.themes/
 mkdir -p $APPEARDIR
 
 # Install latest version of Dracula GTK theme
-git clone https://github.com/dracula/gtk.git
-mv "gtk/" "Dracula/"
-cp -r "Dracula/" "/mnt/home/$USERNAME/.themes/"
-rm -r "Dracula/" 
+arch-chroot /mnt git clone https://github.com/dracula/gtk.git
+arch-chroot /mnt mv "gtk/" "Dracula/"
+arch-chroot /mnt cp -r "Dracula/" "/home/$USERNAME/.themes/"
+arch-chroot /mnt rm -r "Dracula/" 
 
 # Install papirus icons & folders
-wget -qO- https://git.io/papirus-icon-theme-install | DESTDIR="/mnt/home/$USERNAME/.icons" sh
+arch-chroot /mnt wget -qO- https://git.io/papirus-icon-theme-install | DESTDIR="/home/$USERNAME/.icons" sh
 arch-chroot /mnt chmod -R u=rwx,g=rwx /mnt/home/$USERNAME/.icons
-wget -qO- https://git.io/papirus-folders-install | sh
+arch-chroot wget -qO- https://git.io/papirus-folders-install | sh
 arch-chroot /mnt papirus-folders -C bluegrey --theme Papirus-Dark
+
 
 # Install the latest version  of Spaceship
 arch-chroot /mnt curl -fsSL https://starship.rs/install.sh | bash -s -- -y
