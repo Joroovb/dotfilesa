@@ -67,9 +67,10 @@ graphics() {
 
 packages_aur() {
     arch-chroot /mnt sed -i 's/%wheel ALL=(ALL) ALL/%wheel ALL=(ALL) NOPASSWD: ALL/' /etc/sudoers
-    arch-chroot /mnt bash -c "echo -e \"$PASSWORD\n$PASSWORD\n$PASSWORD\n$PASSWORD\n$PASSWORD\" | sudo -u $USERNAME -S bash -c \"cd /home/$USERNAME && git clone https://aur.archlinux.org/yay.git && (cd yay && makepkg -si --noconfirm) && rm -rf yay\""    
+    # 1x enter te weinig
+    arch-chroot /mnt bash -c "echo -e \"$PASSWORD\n$PASSWORD\n$PASSWORD\n$PASSWORD\n$PASSWORD\n\" | sudo -u $USERNAME -S bash -c \"cd /home/$USERNAME && git clone https://aur.archlinux.org/yay.git && (cd yay && makepkg -si --noconfirm) && rm -rf yay\""    
     #aur_install "autotiling bitwarden-cli lf ncspot networkmanager-dmenu nerd-fonts-fira-code picom-ibhagwan-git pistol-git polybar fortune-mod-calvin"
-    aur_install AUR_PACKS
+    aur_install $AUR_PACKS
     arch-chroot /mnt sed -i 's/%wheel ALL=(ALL) NOPASSWD: ALL/%wheel ALL=(ALL) ALL/' /etc/sudoers
 }
 
