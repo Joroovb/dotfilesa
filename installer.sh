@@ -75,7 +75,7 @@ packages_aur() {
 }
 
 aur_install() {
-    AUR_COMMAND="yay -Syu --noconfirm --needed $1"
+    AUR_COMMAND="yay -Syu --noconfirm --needed $AUR_PACKS"
     arch-chroot /mnt bash -c "echo -e \"$PASSWORD\n$PASSWORD\n$PASSWORD\n$PASSWORD\n\" | sudo -u $USERNAME -S bash -c \"$AUR_COMMAND\""
 }
 
@@ -289,7 +289,7 @@ packages_aur
 arch-chroot /mnt chsh -s /usr/bin/fish $USERNAME
 
 # Create environment file for ssh
-touch /mnt/home/$USERNAME/.ssh/environment
+# touch /mnt/home/$USERNAME/.ssh/environment
 
 arch-chroot /mnt ufw default deny incoming
 arch-chroot /mnt ufw default allow outgoing
